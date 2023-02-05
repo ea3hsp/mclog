@@ -1,0 +1,72 @@
+syntax = "proto3";
+
+package mclog;
+
+import "google/protobuf/descriptor.proto";
+
+option go_package = "github.com/ea3hsp/mclog/mclog;mclog";
+option (proto_version) = "0.5.0-beta";
+
+extend google.protobuf.FileOptions {
+    optional string proto_version = 50000;
+}
+
+service HermesService {
+  rpc Log(LogReq) returns (LogRes);
+}
+
+enum Facility {
+    FACILITY_KERN = 0;
+    FACILITY_USER = 1;
+    FACILITY_MAIL = 2;
+    FACILITY_DAEMON = 3;
+    FACILITY_AUTH = 4;
+    FACILITY_SYSFACILITY = 5;
+    FACILITY_LPR = 6;
+    FACILITY_NEWS = 7;
+    FACILITY_UUCP = 8;
+    FACILITY_CRON = 9;
+    FACILITY_AUTHPRIV = 10;
+    FACILITY_FTP = 11;
+    FACILITY_NTP = 12;
+    FACILITY_SECURITY = 13;
+    FACILITY_CONSOLE = 14;
+    FACILITY_SOLARIS_CRON = 15;
+    FACILITY_LOCAL_0 = 16;
+    FACILITY_LOCAL_1 = 17;
+    FACILITY_LOCAL_2 = 18;
+    FACILITY_LOCAL_3 = 19;
+    FACILITY_LOCAL_4 = 20;
+    FACILITY_LOCAL_5 = 21;
+    FACILITY_LOCAL_6 = 22;
+    FACILITY_LOCAL_7 = 23;
+}
+
+enum Severity {
+    SEVERITY_EMERGENCY = 0;
+    SEVERITY_ALERT = 1;
+    SEVERITY_CRITICAL = 2;
+    SEVERITY_ERROR = 3;
+    SEVERITY_WARNING = 4;
+    SEVERITY_NOTICE = 5;
+    SEVERITY_INFORMATIONAL = 6;
+    SEVERITY_DEBUG = 7;
+}
+
+message Void {}
+
+message LogRes {
+    string Response = 1;
+    int64 Updated_At = 2;
+}
+
+message LogReq {
+    Log Log = 1;
+}
+
+message Log {
+    Facility Facility = 1;
+    Severity Severity = 2;
+    int64 Created_At = 3;
+    string Message = 4;
+}
