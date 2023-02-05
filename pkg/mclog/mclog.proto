@@ -11,7 +11,7 @@ extend google.protobuf.FileOptions {
     optional string proto_version = 50000;
 }
 
-service HermesService {
+service LogService {
   rpc Log(LogReq) returns (LogRes);
 }
 

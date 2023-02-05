@@ -18,86 +18,86 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// HermesServiceClient is the client API for HermesService service.
+// LogServiceClient is the client API for LogService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type HermesServiceClient interface {
+type LogServiceClient interface {
 	Log(ctx context.Context, in *LogReq, opts ...grpc.CallOption) (*LogRes, error)
 }
 
-type hermesServiceClient struct {
+type logServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewHermesServiceClient(cc grpc.ClientConnInterface) HermesServiceClient {
-	return &hermesServiceClient{cc}
+func NewLogServiceClient(cc grpc.ClientConnInterface) LogServiceClient {
+	return &logServiceClient{cc}
 }
 
-func (c *hermesServiceClient) Log(ctx context.Context, in *LogReq, opts ...grpc.CallOption) (*LogRes, error) {
+func (c *logServiceClient) Log(ctx context.Context, in *LogReq, opts ...grpc.CallOption) (*LogRes, error) {
 	out := new(LogRes)
-	err := c.cc.Invoke(ctx, "/mclog.HermesService/Log", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/mclog.LogService/Log", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// HermesServiceServer is the server API for HermesService service.
-// All implementations must embed UnimplementedHermesServiceServer
+// LogServiceServer is the server API for LogService service.
+// All implementations must embed UnimplementedLogServiceServer
 // for forward compatibility
-type HermesServiceServer interface {
+type LogServiceServer interface {
 	Log(context.Context, *LogReq) (*LogRes, error)
-	mustEmbedUnimplementedHermesServiceServer()
+	mustEmbedUnimplementedLogServiceServer()
 }
 
-// UnimplementedHermesServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedHermesServiceServer struct {
+// UnimplementedLogServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedLogServiceServer struct {
 }
 
-func (UnimplementedHermesServiceServer) Log(context.Context, *LogReq) (*LogRes, error) {
+func (UnimplementedLogServiceServer) Log(context.Context, *LogReq) (*LogRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Log not implemented")
 }
-func (UnimplementedHermesServiceServer) mustEmbedUnimplementedHermesServiceServer() {}
+func (UnimplementedLogServiceServer) mustEmbedUnimplementedLogServiceServer() {}
 
-// UnsafeHermesServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to HermesServiceServer will
+// UnsafeLogServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to LogServiceServer will
 // result in compilation errors.
-type UnsafeHermesServiceServer interface {
-	mustEmbedUnimplementedHermesServiceServer()
+type UnsafeLogServiceServer interface {
+	mustEmbedUnimplementedLogServiceServer()
 }
 
-func RegisterHermesServiceServer(s grpc.ServiceRegistrar, srv HermesServiceServer) {
-	s.RegisterService(&HermesService_ServiceDesc, srv)
+func RegisterLogServiceServer(s grpc.ServiceRegistrar, srv LogServiceServer) {
+	s.RegisterService(&LogService_ServiceDesc, srv)
 }
 
-func _HermesService_Log_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _LogService_Log_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(LogReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(HermesServiceServer).Log(ctx, in)
+		return srv.(LogServiceServer).Log(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/mclog.HermesService/Log",
+		FullMethod: "/mclog.LogService/Log",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(HermesServiceServer).Log(ctx, req.(*LogReq))
+		return srv.(LogServiceServer).Log(ctx, req.(*LogReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// HermesService_ServiceDesc is the grpc.ServiceDesc for HermesService service.
+// LogService_ServiceDesc is the grpc.ServiceDesc for LogService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var HermesService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "mclog.HermesService",
-	HandlerType: (*HermesServiceServer)(nil),
+var LogService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "mclog.LogService",
+	HandlerType: (*LogServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Log",
-			Handler:    _HermesService_Log_Handler,
+			Handler:    _LogService_Log_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

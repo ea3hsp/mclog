@@ -1,6 +1,7 @@
 package app
 
 import (
+	startcmd "github.com/ea3hsp/mclog/cmd/server/commands/start"
 	vercmd "github.com/ea3hsp/mclog/cmd/server/commands/version"
 	"github.com/ea3hsp/mclog/version"
 	"github.com/urfave/cli/v2"
